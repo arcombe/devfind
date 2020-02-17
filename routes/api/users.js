@@ -36,7 +36,8 @@ router.post("/register", (req, res) => {
 
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ email: "Email already exist" });
+      errors.email = "Email already exist";
+      return res.status(400).json(errors);
     }
 
     const avatar = gravatar.url(req.body.email, {
@@ -84,7 +85,8 @@ router.get("/login", (req, res) => {
   // Find user by email
   User.findOne({ email }).then(user => {
     if (!user) {
-      return res.status(400).json({ user: "No account with this email." });
+      errors.user = "No account with this email.";
+      return res.status(400).json(errors);
     }
 
     // Check password
@@ -98,7 +100,8 @@ router.get("/login", (req, res) => {
           res.json({ success: true, token: "Bearer " + token });
         });
       } else {
-        return res.status(400).json({ password: "Password incorrect." });
+        errors.password = "Password incorrect.";
+        return res.status(400).json(errors);
       }
     });
   });
