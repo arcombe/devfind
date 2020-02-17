@@ -46,20 +46,22 @@ router.get(
 // @access  Private
 router.post(
   "/create",
-  passport.authenticate("jwt", { session: false }).then((req, res) => {
-
-    Profile.findOne({userID: req.user.id}.then( profile => {
-      if (!profile){
-        const profile = new Profile(res.body);
-      } else {
-        Object.keys(req.body).map(key => {
-          profile.key = req.body[key];
-        })
-      }
-    }).catch( err  => {
-      res.status(400).json(err);
-    })
-  })
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ userID: req.user.id })
+      .then(profile => {
+        if (!profile) {
+          const profile = new Profile(res.body);
+        } else {
+          Object.keys(req.body).map(key => {
+            profile.key = req.body[key];
+          });
+        }
+      })
+      .catch(err => {
+        return res.status(400).json(err);
+      });
+  }
 );
 
 module.exports = router;
