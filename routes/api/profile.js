@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 
 // Load input validation
-//const validateProfileInput = require("../../validation/register");
+const validateProfileInput = require("../../validation/profile");
 
 // Load models
 const Profile = require("../../models/Profile");
@@ -18,7 +18,7 @@ router.get("/test", (req, res) => {
   res.json({ msg: "Profile Works" });
 });
 
-// @route   GET api/profile/profile
+// @route   GET api/profile/
 // @desc    Get current users profile
 // @access  Private
 router.get(
@@ -41,21 +41,61 @@ router.get(
   }
 );
 
-// @route   POST api/profile/profile/create
+// @route   POST api/profile/
 // @desc    Creates a profile for current user.
 // @access  Private
 router.post(
-  "/create",
+  "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const { errors, isValid } = validateProfileInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const profileFields = {};
+    profileFields.userID = req.user.id;
+    profileFields.social = {};
+
+    Object.keys(req.body).map(key => {
+      if (key === "skills") {
+        profileFields[key] = req.body[key].split(",");
+      } else if (
+        ["youtube", "twitter", "linkedin", "instagram", "facebook"].includes(
+          key
+        )
+      ) {
+        profileFields.social[key] = req.body[key];
+      } else {
+        profileFields[key] = req.body[key];
+      }
+    });
     Profile.findOne({ userID: req.user.id })
       .then(profile => {
         if (!profile) {
-          const profile = new Profile(res.body);
+          const newProfile = new Profile(profileFields);
+
+          newProfile
+            .save()
+            .then(profile => res.json(profile))
+            .catch(err => res.status(400).json(err));
         } else {
-          Object.keys(req.body).map(key => {
-            profile.key = req.body[key];
-          });
+          Profile.findOne({ handle: profileFields.handle })
+            .then(profile => {
+              errors.handle =
+                "Profile handle already exist, please pick something else.";
+            })
+            .catch(err => res.status(400).json(err));
+          Profile.findOneAndUpdate(
+            { userID: req.user.id },
+            { $set: profileFields },
+            { new: true }
+          )
+            .then(profile => {
+              res.json(profile);
+            })
+            .catch(err => res.status(400).json(err));
         }
       })
       .catch(err => {
