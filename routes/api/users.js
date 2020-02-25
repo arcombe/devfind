@@ -16,13 +16,6 @@ const User = require("../../models/User");
 // Load keys
 const key = require("../../config/keys").secretOrKey;
 
-// @route   GET api/users/test
-// @desc    Test users route
-// @access  Public
-router.get("/test", (req, res) => {
-  res.json({ msg: "User works" });
-});
-
 // @route   POST api/users/register
 // @desc    Register User
 // @access  Public
