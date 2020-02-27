@@ -28,6 +28,10 @@ class Login extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
+
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
   }
 
   onChange(e) {
@@ -42,7 +46,9 @@ class Login extends Component {
       password: this.state.password
     };
 
-    this.props.loginUser(user, this.props.history);
+    this.props.loginUser(user);
+
+    console.log(this.props.auth.isAuthenticated);
   }
 
   render() {

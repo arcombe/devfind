@@ -10,7 +10,6 @@ const registerUser = (userData, history) => dispatch => {
     .post("/api/users/register", userData)
     .then(res => {
       history.push("/login");
-      console.log(res.data);
     })
     .catch(err =>
       dispatch({
@@ -22,7 +21,7 @@ const registerUser = (userData, history) => dispatch => {
 
 // Login User
 
-const loginUser = (userData, history) => dispatch => {
+const loginUser = userData => dispatch => {
   axios
     .post("/api/users/login", userData)
     .then(res => {
@@ -35,13 +34,10 @@ const loginUser = (userData, history) => dispatch => {
 
       // Decode token to get data
       const decoded = jwt_decode(token);
-      // Set user
-      console.log(decoded);
-      history.push("/dashboard");
+
       dispatch({ type: SET_USER, payload: decoded });
     })
     .catch(err => {
-      console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
@@ -50,8 +46,6 @@ const loginUser = (userData, history) => dispatch => {
 };
 
 const logoutUser = () => dispatch => {
-  console.log("logout");
-
   // Remove token LS
   localStorage.removeItem("jwtToken");
 
