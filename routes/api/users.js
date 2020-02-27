@@ -61,10 +61,10 @@ router.post("/register", (req, res) => {
   });
 });
 
-// @route   GET api/users/login
+// @route   POST api/users/login
 // @desc    User login / returning JWT Token
 // @access  Public
-router.get("/login", (req, res) => {
+router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
 
   // Check input validation.
@@ -78,7 +78,7 @@ router.get("/login", (req, res) => {
   // Find user by email
   User.findOne({ email }).then(user => {
     if (!user) {
-      errors.user = "No account with this email.";
+      errors.email = "No account with this email.";
       return res.status(400).json(errors);
     }
 
