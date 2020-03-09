@@ -21,6 +21,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
+import EditProfile from "./components/edit-profile/EditProfile";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -28,21 +29,31 @@ if (localStorage.jwtToken) {
 
   const decoded = jwt_decode(localStorage.jwtToken);
 
+  const currentTime = Date.now() / 1000;
+
   store.dispatch({
     type: SET_USER,
     payload: decoded
   });
 
-  const currentTime = Date().now / 1000;
+  console.log(decoded.exp, currentTime);
+
   if (decoded.exp < currentTime) {
-    store.dispatch({
-      type: SET_USER,
-      payload: {}
-    });
+    // Remove token LS
+    localStorage.removeItem("jwtToken");
+
+    // Remove auth header
+    setAuthToken(false);
+
+    // Remove current user
+    store.dispatch({ type: SET_USER, payload: {} });
+
     store.dispatch({
       type: CLEAR_CURRENT_PROFILE
     });
     window.location.href = "/login";
+
+    localStorage.delete("jwtToken");
   }
 }
 
@@ -62,6 +73,11 @@ function App() {
                 exact
                 path="/create-profile"
                 component={CreateProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/profile/edit"
+                component={EditProfile}
               />
             </Switch>
           </div>
