@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import porpTypes from "prop-types";
-import { createProfile } from "../../actions/profileActions";
-import TextFieldGroup from "../common/TextFieldGroup";
-import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-import SelectListGroup from "../common/SelectListGroup";
-import InputGroup from "../common/InputGroup";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import porpTypes from 'prop-types';
+import { createProfile } from '../../actions/profileActions';
+import TextFieldGroup from '../common/TextFieldGroup';
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+import SelectListGroup from '../common/SelectListGroup';
+import InputGroup from '../common/InputGroup';
+import { withRouter } from 'react-router-dom';
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -14,19 +14,19 @@ class CreateProfile extends Component {
 
     this.state = {
       displaySocialInputs: false,
-      handle: "",
-      company: "",
-      website: "",
-      location: "",
-      status: "",
-      skills: "",
-      github: "",
-      bio: "",
-      twitter: "",
-      facebook: "",
-      instagram: "",
-      linkedin: "",
-      youtube: "",
+      handle: '',
+      company: '',
+      website: '',
+      location: '',
+      status: '',
+      skills: '',
+      githubusername: '',
+      bio: '',
+      twitter: '',
+      facebook: '',
+      instagram: '',
+      linkedin: '',
+      youtube: '',
       errors: {}
     };
 
@@ -55,7 +55,7 @@ class CreateProfile extends Component {
       location: this.state.location,
       status: this.state.status,
       skills: this.state.skills,
-      github: this.state.github,
+      githubusername: this.state.githubusername,
       bio: this.state.bio,
       twitter: this.state.twitter,
       facebook: this.state.facebook,
@@ -150,18 +150,18 @@ class CreateProfile extends Component {
                   error={errors.status}
                   info="Give us an idea of where you are at in your career"
                   options={[
-                    { label: "* Select Professional Status", value: "" },
-                    { label: "Developer", value: "Developer" },
-                    { label: "Junior Developer", value: "Junior Developer" },
+                    { label: '* Select Professional Status', value: '' },
+                    { label: 'Developer', value: 'Developer' },
+                    { label: 'Junior Developer', value: 'Junior Developer' },
                     {
-                      label: "Intermidate Developer",
-                      value: "Intermidate Developer"
+                      label: 'Intermidate Developer',
+                      value: 'Intermidate Developer'
                     },
-                    { label: "Senior Developer", value: "Senior Developer" },
-                    { label: "Student/Learning", value: "Student/Learning" },
-                    { label: "Instuctor/Teacher", value: "Instuctor/Teacher" },
-                    { label: "Intern", value: "Intern" },
-                    { label: "Other", value: "Other" }
+                    { label: 'Senior Developer', value: 'Senior Developer' },
+                    { label: 'Student/Learning', value: 'Student/Learning' },
+                    { label: 'Instuctor/Teacher', value: 'Instuctor/Teacher' },
+                    { label: 'Intern', value: 'Intern' },
+                    { label: 'Other', value: 'Other' }
                   ]}
                 />
 
@@ -202,11 +202,11 @@ class CreateProfile extends Component {
                 />
 
                 <TextFieldGroup
-                  name="github"
+                  name="githubusername"
                   placeholder="Github Username"
-                  value={this.state.github}
+                  value={this.state.githubusername}
                   onChange={this.onChange}
-                  error={errors.github}
+                  error={errors.githubusername}
                   info="If you want your latest repos and a Github link, include your username"
                 />
 
@@ -234,7 +234,7 @@ class CreateProfile extends Component {
                   <span className="text-muted ml-3">Optional</span>
                 </div>
 
-                {displaySocialInputs ? socialInputs : ""}
+                {displaySocialInputs ? socialInputs : ''}
 
                 <input
                   type="submit"

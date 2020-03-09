@@ -1,12 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import porpTypes from "prop-types";
-import { createProfile, getCurrentProfile } from "../../actions/profileActions";
-import TextFieldGroup from "../common/TextFieldGroup";
-import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-import SelectListGroup from "../common/SelectListGroup";
-import InputGroup from "../common/InputGroup";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import porpTypes from 'prop-types';
+import { createProfile, getCurrentProfile } from '../../actions/profileActions';
+import TextFieldGroup from '../common/TextFieldGroup';
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+import SelectListGroup from '../common/SelectListGroup';
+import InputGroup from '../common/InputGroup';
+import { withRouter } from 'react-router-dom';
 
 class EditProfile extends Component {
   constructor(props) {
@@ -14,19 +15,19 @@ class EditProfile extends Component {
 
     this.state = {
       displaySocialInputs: false,
-      handle: "",
-      company: "",
-      website: "",
-      location: "",
-      status: "",
-      skills: "",
-      github: "",
-      bio: "",
-      twitter: "",
-      facebook: "",
-      instagram: "",
-      linkedin: "",
-      youtube: "",
+      handle: '',
+      company: '',
+      website: '',
+      location: '',
+      status: '',
+      skills: '',
+      githubusername: '',
+      bio: '',
+      twitter: '',
+      facebook: '',
+      instagram: '',
+      linkedin: '',
+      youtube: '',
       errors: {}
     };
 
@@ -47,20 +48,25 @@ class EditProfile extends Component {
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
 
+      const skills = profile.skills.reduce((acc, current) => {
+        return acc === '' ? current : acc + ', ' + current;
+      }, '');
+      console.log(skills);
+
       this.setState({
         handle: profile.handle,
         company: profile.company,
         website: profile.website,
         location: profile.location,
         status: profile.status,
-        skills: profile.skills,
-        github: profile.github,
+        skills: skills,
+        githubusername: profile.githubusername,
         bio: profile.bio,
-        twitter: profile.twitter,
-        facebook: profile.facebook,
-        instagram: profile.instagram,
-        linkedin: profile.linkedin,
-        youtube: profile.youtube
+        twitter: profile.social.twitter,
+        facebook: profile.social.facebook,
+        instagram: profile.social.instagram,
+        linkedin: profile.social.linkedin,
+        youtube: profile.social.youtube
       });
     }
   }
@@ -73,14 +79,14 @@ class EditProfile extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const neeProfile = {
+    const newProfile = {
       handle: this.state.handle,
       company: this.state.company,
       website: this.state.website,
       location: this.state.location,
       status: this.state.status,
       skills: this.state.skills,
-      github: this.state.github,
+      githubusername: this.state.githubusername,
       bio: this.state.bio,
       twitter: this.state.twitter,
       facebook: this.state.facebook,
@@ -89,11 +95,11 @@ class EditProfile extends Component {
       youtube: this.state.youtube
     };
 
-    this.props.createProfile(neeProfile, this.props.history);
+    this.props.createProfile(newProfile, this.props.history);
   }
 
   cancelOnClick(e) {
-    this.props.history.push("/dashboard");
+    this.props.history.push('/dashboard');
   }
 
   render() {
@@ -157,6 +163,9 @@ class EditProfile extends Component {
         <div className="container ">
           <div className="row">
             <div className="col-md-8 m-auto">
+              <Link to="/dashboard" className="btn btn-light">
+                Go Back
+              </Link>
               <h1 className="display-4 text-center">Edit Profile</h1>
               <small className="d-block pb-3">* = required fields</small>
               <form onSubmit={this.onSubmit}>
@@ -176,18 +185,18 @@ class EditProfile extends Component {
                   error={errors.status}
                   info="Give us an idea of where you are at in your career"
                   options={[
-                    { label: "* Select Professional Status", value: "" },
-                    { label: "Developer", value: "Developer" },
-                    { label: "Junior Developer", value: "Junior Developer" },
+                    { label: '* Select Professional Status', value: '' },
+                    { label: 'Developer', value: 'Developer' },
+                    { label: 'Junior Developer', value: 'Junior Developer' },
                     {
-                      label: "Intermidate Developer",
-                      value: "Intermidate Developer"
+                      label: 'Intermidate Developer',
+                      value: 'Intermidate Developer'
                     },
-                    { label: "Senior Developer", value: "Senior Developer" },
-                    { label: "Student/Learning", value: "Student/Learning" },
-                    { label: "Instuctor/Teacher", value: "Instuctor/Teacher" },
-                    { label: "Intern", value: "Intern" },
-                    { label: "Other", value: "Other" }
+                    { label: 'Senior Developer', value: 'Senior Developer' },
+                    { label: 'Student/Learning', value: 'Student/Learning' },
+                    { label: 'Instuctor/Teacher', value: 'Instuctor/Teacher' },
+                    { label: 'Intern', value: 'Intern' },
+                    { label: 'Other', value: 'Other' }
                   ]}
                 />
 
@@ -230,9 +239,9 @@ class EditProfile extends Component {
                 <TextFieldGroup
                   name="github"
                   placeholder="Github Username"
-                  value={this.state.github}
+                  value={this.state.githubusername}
                   onChange={this.onChange}
-                  error={errors.github}
+                  error={errors.githubusername}
                   info="If you want your latest repos and a Github link, include your username"
                 />
 
@@ -260,7 +269,7 @@ class EditProfile extends Component {
                   <span className="text-muted ml-3">Optional</span>
                 </div>
 
-                {displaySocialInputs ? socialInputs : ""}
+                {displaySocialInputs ? socialInputs : ''}
 
                 <div className="row">
                   <div className="col-md-6">

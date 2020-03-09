@@ -1,10 +1,12 @@
-import React, { Component } from "react";
-import propTypes from "prop-types";
-import { connect } from "react-redux";
-import { getCurrentProfile, deleteAccount } from "../../actions/profileActions";
-import Spinner from "../common/Spinner";
-import { Link } from "react-router-dom";
-import ProfileActions from "./ProfileActions";
+import React, { Component } from 'react';
+import propTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getCurrentProfile, deleteAccount } from '../../actions/profileActions';
+import Spinner from '../common/Spinner';
+import { Link } from 'react-router-dom';
+import ProfileActions from './ProfileActions';
+import Experience from './Experience';
+import Education from './Education';
 
 class Dashboard extends Component {
   constructor() {
@@ -18,8 +20,6 @@ class Dashboard extends Component {
   }
 
   onDeleteClick(e) {
-    e.preventDefault();
-
     this.props.deleteAccount();
   }
 
@@ -47,7 +47,7 @@ class Dashboard extends Component {
           <div className="row">
             <div className="col-md-12">
               <p className="lead text-muted">
-                Welcome{" "}
+                Welcome{' '}
                 <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
               </p>
             </div>
@@ -55,6 +55,8 @@ class Dashboard extends Component {
           <div className="row">
             <div className="col-md-12 ">
               <ProfileActions />
+              <Experience experience={profile.experience} />
+              <Education education={profile.education} />
             </div>
           </div>
           <div className="row">

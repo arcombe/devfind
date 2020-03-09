@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import propTypes from "prop-types";
-import { connect } from "react-redux";
-import { logoutUser } from "../../actions/authActions";
-import { clearProfile } from "../../actions/profileActions";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import propTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/authActions';
+import { clearProfile } from '../../actions/profileActions';
+import { withRouter } from 'react-router-dom';
 
 class Navbar extends Component {
   constructor() {
@@ -25,16 +25,21 @@ class Navbar extends Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <a href="/" className="nav-link" onClick={this.signOut}>
+          <Link to="/dashboard" className="nav-link">
+            Dashboard
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/" className="nav-link" onClick={this.signOut}>
             <img
               className="rounded-circle"
               src={user.avatar}
               alt={user.name}
-              style={{ width: "25px", marginRight: "5px" }}
+              style={{ width: '25px', marginRight: '5px' }}
               title="You must have a gravatar connected to your email to display an image"
             />
             Log Out
-          </a>
+          </Link>
         </li>
       </ul>
     );

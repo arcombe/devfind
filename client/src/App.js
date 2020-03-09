@@ -1,27 +1,29 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Provider } from "react-redux";
-import jwt_decode from "jwt-decode";
-import setAuthToken from "./utils/setAuthToken";
-import { SET_USER, CLEAR_CURRENT_PROFILE } from "./actions/types";
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import jwt_decode from 'jwt-decode';
+import setAuthToken from './utils/setAuthToken';
+import { SET_USER, CLEAR_CURRENT_PROFILE } from './actions/types';
 
-import store from "./store";
+import store from './store';
 
 // css
-import "./App.css";
+import './App.css';
 
 // Private Routes
-import PrivateRoute from "./components/common/PrivateRoute";
+import PrivateRoute from './components/common/PrivateRoute';
 
 // Components
-import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
-import Landing from "./components/layout/Landing";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
-import Dashboard from "./components/dashboard/Dashboard";
-import CreateProfile from "./components/create-profile/CreateProfile";
-import EditProfile from "./components/edit-profile/EditProfile";
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+import Landing from './components/layout/Landing';
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
+import Dashboard from './components/dashboard/Dashboard';
+import CreateProfile from './components/create-profile/CreateProfile';
+import EditProfile from './components/edit-profile/EditProfile';
+import AddExperience from './components/add-info/AddExperience';
+import AddEducation from './components/add-info/AddEducation';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -40,7 +42,7 @@ if (localStorage.jwtToken) {
 
   if (decoded.exp < currentTime) {
     // Remove token LS
-    localStorage.removeItem("jwtToken");
+    localStorage.removeItem('jwtToken');
 
     // Remove auth header
     setAuthToken(false);
@@ -51,9 +53,9 @@ if (localStorage.jwtToken) {
     store.dispatch({
       type: CLEAR_CURRENT_PROFILE
     });
-    window.location.href = "/login";
+    window.location.href = '/login';
 
-    localStorage.delete("jwtToken");
+    localStorage.delete('jwtToken');
   }
 }
 
@@ -76,8 +78,18 @@ function App() {
               />
               <PrivateRoute
                 exact
-                path="/profile/edit"
+                path="/edit-profile"
                 component={EditProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/add-experience"
+                component={AddExperience}
+              />
+              <PrivateRoute
+                exact
+                path="/add-education"
+                component={AddEducation}
               />
             </Switch>
           </div>
