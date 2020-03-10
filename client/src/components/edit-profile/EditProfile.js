@@ -237,7 +237,7 @@ class EditProfile extends Component {
                 />
 
                 <TextFieldGroup
-                  name="github"
+                  name="githubusername"
                   placeholder="Github Username"
                   value={this.state.githubusername}
                   onChange={this.onChange}

@@ -54,6 +54,19 @@ const getCurrentProfile = () => dispatch => {
     });
 };
 
+const getProfileByHandle = handle => dispatch => {
+  dispatch(setProfileLoading());
+
+  axios
+    .get(`/api/profile/handle/${handle}`)
+    .then(res => {
+      dispatch({ type: GET_PROFILE, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: GET_PROFILE, payload: {} });
+    });
+};
+
 const getAllProfiles = () => dispatch => {
   dispatch(setProfileLoading());
 
@@ -152,5 +165,6 @@ export {
   addEducation,
   deleteExperience,
   deleteEducation,
-  getAllProfiles
+  getAllProfiles,
+  getProfileByHandle
 };

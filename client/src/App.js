@@ -25,6 +25,7 @@ import EditProfile from './components/edit-profile/EditProfile';
 import AddExperience from './components/add-info/AddExperience';
 import AddEducation from './components/add-info/AddEducation';
 import Profiles from './components/Profiles/Profiles';
+import Profile from './components/Profile/Profile';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -38,8 +39,6 @@ if (localStorage.jwtToken) {
     type: SET_USER,
     payload: decoded
   });
-
-  console.log(decoded.exp, currentTime);
 
   if (decoded.exp < currentTime) {
     // Remove token LS
@@ -71,6 +70,7 @@ function App() {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/profiles" component={Profiles} />
+            <Route exact path="/profile/:handle" component={Profile} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute
