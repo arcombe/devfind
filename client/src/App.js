@@ -26,6 +26,7 @@ import AddExperience from './components/add-info/AddExperience';
 import AddEducation from './components/add-info/AddEducation';
 import Profiles from './components/Profiles/Profiles';
 import Profile from './components/Profile/Profile';
+import Posts from './components/Posts/Posts';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -93,6 +94,7 @@ function App() {
                 path="/add-education"
                 component={AddEducation}
               />
+              <PrivateRoute exact path="/posts" component={Posts} />
             </Switch>
           </div>
           <Footer />

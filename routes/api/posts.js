@@ -1,19 +1,19 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const mongoose = require("mongoose");
-const passport = require("passport");
+const mongoose = require('mongoose');
+const passport = require('passport');
 
 // Import validator
-const validatorPostInput = require("../../validation/post");
-const validateCommentInput = require("../../validation/comment");
+const validatorPostInput = require('../../validation/post');
+const validateCommentInput = require('../../validation/comment');
 
 // Import model
-const Post = require("../../models/Post");
+const Post = require('../../models/Post');
 
 // @route   GET api/posts/:post_id
-// @desc    Create a post.
+// @desc    Get posts
 // @access  Public
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   Post.find()
     .sort({ date: -1 })
     .then(posts => res.json(posts))
@@ -21,9 +21,9 @@ router.get("/", (req, res) => {
 });
 
 // @route   GET api/posts/:post_id
-// @desc    Create a post.
+// @desc    Get post by id
 // @access  Public
-router.get("/:post_id", (req, res) => {
+router.get('/:post_id', (req, res) => {
   Post.findById(req.params.post_id)
     .then(post => res.json(post))
     .catch(err => res.status(404).json(err));
@@ -33,8 +33,8 @@ router.get("/:post_id", (req, res) => {
 // @desc    Create a post.
 // @access  Private
 router.post(
-  "/",
-  passport.authenticate("jwt", { session: false }),
+  '/',
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { errors, isValid } = validatorPostInput(req.body);
 
@@ -61,8 +61,8 @@ router.post(
 // @desc    Delete a post
 // @access  Private
 router.delete(
-  "/:post_id",
-  passport.authenticate("jwt", { session: false }),
+  '/:post_id',
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const errors = {};
 
@@ -71,7 +71,7 @@ router.delete(
         console.log(post);
         console.log({ post: post.user, user: req.user.id });
         if (post.user == req.user.id) {
-          console.log("okey");
+          console.log('okey');
           Post.findOneAndDelete({ _id: req.params.post_id })
             .then(post => {
               res.json(post);
@@ -79,7 +79,7 @@ router.delete(
             .catch(err => res.status(400).json({ msg: err }));
         } else {
           errors.post =
-            "You dont have the authority to delete someone elses post.";
+            'You dont have the authority to delete someone elses post.';
           return res.status(400).json(errors);
         }
       })
@@ -87,12 +87,12 @@ router.delete(
   }
 );
 
-// @route   PUT api/posts/like/:post_id
+// @route   POST api/posts/like/:post_id
 // @desc    Like a post.
 // @access  Public
-router.put(
-  "/like/:post_id",
-  passport.authenticate("jwt", { session: false }),
+router.post(
+  '/like/:post_id',
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const errors = {};
 
@@ -103,14 +103,14 @@ router.put(
           false
         );
         if (liked) {
-          errors.likes = "Already liked.";
+          errors.likes = 'Already liked.';
           return res.status(400).json(errors);
         } else {
           post.likes.push({ user: req.user.id });
           post.save().then(post => res.json(post));
         }
       })
-      .catch(err => res.status(400).json({ msg: "No post." }));
+      .catch(err => res.status(400).json({ msg: 'No post.' }));
   }
 );
 
@@ -118,8 +118,8 @@ router.put(
 // @desc    Delete your like.
 // @access  Public
 router.delete(
-  "/like/:post_id",
-  passport.authenticate("jwt", { session: false }),
+  '/like/:post_id',
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const errors = {};
 
@@ -128,16 +128,16 @@ router.delete(
         post.likes = post.likes.filter(like => like.user != req.user.id);
         post.save().then(post => res.json(post));
       })
-      .catch(err => res.status(400).json({ msg: "No post." }));
+      .catch(err => res.status(400).json({ msg: 'No post.' }));
   }
 );
 
-// @route   PUT api/posts/comment/:post_id
+// @route   POST api/posts/comment/:post_id
 // @desc    Like a post.
 // @access  Public
-router.put(
-  "/comment/:post_id",
-  passport.authenticate("jwt", { session: false }),
+router.post(
+  '/comment/:post_id',
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { errors, isValid } = validateCommentInput(req.body);
 
@@ -165,8 +165,8 @@ router.put(
 // @desc    Delete a post.
 // @access  Public
 router.delete(
-  "/comment/:post_id/:comment_id",
-  passport.authenticate("jwt", { session: false }),
+  '/comment/:post_id/:comment_id',
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Post.findById(req.params.post_id)
       .then(post => {
