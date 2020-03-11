@@ -142,7 +142,7 @@ router.post(
     const { errors, isValid } = validateCommentInput(req.body);
 
     if (!isValid) {
-      return require.status(400).json(errors);
+      return res.status(400).json(errors);
     }
 
     const commentFields = {};
@@ -157,7 +157,7 @@ router.post(
         post.comment.push(commentFields);
         post.save().then(post => res.json(post));
       })
-      .catch(err => res.status(404).json(err));
+      .catch(err => res.status(404).json({ error: err }));
   }
 );
 

@@ -1,5 +1,6 @@
 // Errors
 const GET_ERRORS = 'GET_ERRORS';
+const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 // Users
 const SET_USER = 'SET_USER';
@@ -17,7 +18,7 @@ const GET_POST = 'GET_POST';
 const GET_ALL_POSTS = 'GET_ALL_POSTS';
 const ADD_POST = 'ADD_POST';
 const DELETE_POST = 'DELETE_POST';
-const ADD_LIKE = 'ADD_LIKE';
+const ADD_COMMENT = 'ADD_COMMENT';
 
 export {
   GET_ERRORS,
@@ -31,5 +32,7 @@ export {
   GET_POST,
   GET_ALL_POSTS,
   ADD_POST,
-  DELETE_POST
+  DELETE_POST,
+  ADD_COMMENT,
+  CLEAR_ERRORS
 };

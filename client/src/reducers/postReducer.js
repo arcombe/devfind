@@ -3,7 +3,8 @@ import {
   GET_ALL_POSTS,
   POST_LOADING,
   ADD_POST,
-  DELETE_POST
+  DELETE_POST,
+  ADD_COMMENT
 } from '../actions/types';
 
 const initialState = {
@@ -27,6 +28,8 @@ export default (state = initialState, action) => {
         ...state,
         posts: state.posts.filter(x => x._id !== action.payload._id)
       };
+    case ADD_COMMENT:
+      return { ...state, post: action.payload };
     default:
       return state;
   }
