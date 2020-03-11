@@ -1,8 +1,14 @@
 import React from 'react';
+
+export default function TextFieldGroup() {
+  return <div></div>;
+}
+
+import React from 'react';
 import classnames from 'classnames';
 import propTypes from 'prop-types';
 
-const TextFieldGroup = ({
+function TextFieldGroup({
   name,
   placeholder,
   value,
@@ -12,7 +18,7 @@ const TextFieldGroup = ({
   type,
   onChange,
   disabled
-}) => {
+}) {
   return (
     <div className="form-group">
       <input
@@ -30,7 +36,7 @@ const TextFieldGroup = ({
       <div className="invalid-feedback">{error ? error : ''}</div>
     </div>
   );
-};
+}
 
 TextFieldGroup.propTypes = {
   name: propTypes.string.isRequired,
