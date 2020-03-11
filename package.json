@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Find developers online",
   "main": "index.js",
+  "engines": {
+    "node": "12.13.1"
+  },
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node index.js",
@@ -12,7 +15,7 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alexander Arcombe",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

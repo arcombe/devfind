@@ -9,8 +9,6 @@ import {
 import axios from 'axios';
 
 const createProfile = (profileData, history) => dispatch => {
-  console.log('fetch from here, do something cool');
-
   axios
     .post('api/profile', profileData)
     .then(res => history.push('/dashboard'))
