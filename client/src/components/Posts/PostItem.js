@@ -27,7 +27,7 @@ class PostItem extends Component {
     const { post, auth } = this.props;
 
     const actions = this.props.displayActions ? (
-      <div className="mt-auto">
+      <div className="col-12 align-self-end">
         <button
           onClick={this.onLikeClick.bind(this)}
           className="btn btn-light mr-1"
@@ -59,8 +59,12 @@ class PostItem extends Component {
             <p className="text-center">{post.name}</p>
           </div>
           <div className="col-md-10">
-            <p className="lead">{post.text}</p>
-            {actions}
+            <div className="row h-100">
+              <div className="col-12">
+                <p className="lead">{post.text}</p>
+              </div>
+              {actions}
+            </div>
           </div>
         </div>
       </div>
