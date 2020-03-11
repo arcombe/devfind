@@ -1,10 +1,4 @@
 import React from 'react';
-
-export default function TextFieldGroup() {
-  return <div></div>;
-}
-
-import React from 'react';
 import classnames from 'classnames';
 import propTypes from 'prop-types';
 
